@@ -1,0 +1,31 @@
+{
+  "name": "vite-plugin-interface-portal",
+  "version": "0.0.1",
+  "description": "use hmr hook to update swagger api & interface",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hello-hyh/vite-plugin-interface-portal.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hello-hyh/vite-plugin-interface-portal/issues"
+  },
+  "files": [
+    "src/",
+    "README.md"
+  ],
+  "homepage": "https://github.com/hello-hyh/vite-plugin-interface-portal#readme",
+  "keywords": [
+    "vite-plugin"
+  ],
+  "dependencies": {
+    "axios": "^0.21.1",
+    "md5": "^2.3.0",
+    "openapi-typescript": "^4.0.2"
+  }
+}
