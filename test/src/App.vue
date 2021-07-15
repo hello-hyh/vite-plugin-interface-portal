@@ -4,7 +4,7 @@
     src="./assets/logo.png"
   />
 
-  <div>23323552</div>
+  <div>123</div>
   <HelloWorld msg="Hello Vue 3 + Vite" />
 
 </template>

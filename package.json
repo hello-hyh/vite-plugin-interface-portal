@@ -16,7 +16,8 @@
     "url": "https://github.com/hello-hyh/vite-plugin-interface-portal/issues"
   },
   "files": [
-    "src/",
+    "src/index.js",
+    "src/postInstall.js",
     "README.md"
   ],
   "homepage": "https://github.com/hello-hyh/vite-plugin-interface-portal#readme",

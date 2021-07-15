@@ -5,11 +5,10 @@ const { default: swaggerToTS } = require("openapi-typescript");
 const outputDir = path.resolve('./swagger_interface')
 const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
 const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
-const os = require('os');
-const cacheDir = `${os.homedir()}/.InterfacePortal`
+const cacheDir = path.resolve(`./node_modules/.InterfacePortal`)
 const md5 = require("md5");
 
-export default function InterfacePortal ({ apiPath = "" }) {
+function InterfacePortal ({ apiPath = "" }) {
   const _apiPath = apiPath
   const _catchFile = `${cacheDir}/${md5(_apiPath)}.txt`
   return {
@@ -17,7 +16,6 @@ export default function InterfacePortal ({ apiPath = "" }) {
     apply: 'serve',
     enforce: 'pre',
     handleHotUpdate () {
-      console.log('end')
       try {
         mkdirSync(cacheDir);
         writeFileSync(_catchFile, "");
@@ -52,3 +50,5 @@ export default function InterfacePortal ({ apiPath = "" }) {
     }
   }
 }
+module.exports = InterfacePortal
+InterfacePortal.default = InterfacePortal
