@@ -30,7 +30,8 @@ function InterfacePortal ({ apiPath = "" }) {
       axios
         .get(_apiPath)
         .then(async ({ data: res }) => {
-          const currentHash = md5(res)
+          const resStr = JSON.stringify(res['components'])
+          const currentHash = resStr.length.toString()
           if (lastHash !== currentHash) {
             writeFileSync(_catchFile, currentHash)
             try {
@@ -38,9 +39,7 @@ function InterfacePortal ({ apiPath = "" }) {
             } catch (error) {
               mkdirSync(outputDir, { recursive: true })
             }
-            writeFileSync(outputSwJson, JSON.stringify(res));
-            const input = JSON.parse(readFileSync(outputSwJson, "utf8"));
-            const output = await swaggerToTS(input);
+            const output = await swaggerToTS(res);
             writeFileSync(outputInterface, output);
           }
         }).catch((e) => {
