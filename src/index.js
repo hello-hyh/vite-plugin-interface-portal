@@ -1,6 +1,6 @@
 const axios = require("axios");
 const path = require('path')
-const { readFileSync, writeFileSync, mkdirSync, accessSync, constants } = require("fs");
+const { readFileSync, writeFileSync, mkdirSync, accessSync, constants, appendFileSync } = require("fs");
 const { default: swaggerToTS } = require("openapi-typescript");
 const outputDir = path.resolve('./swagger_interface')
 const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
@@ -11,6 +11,7 @@ const md5 = require("md5");
 function InterfacePortal ({ apiPath = "" }) {
   const _apiPath = apiPath
   const _catchFile = `${cacheDir}/${md5(_apiPath)}.txt`
+  const _logFile = `${cacheDir}/${md5(_apiPath)}_log.txt`
   return {
     name: 'interface-portal',
     apply: 'serve',
@@ -43,7 +44,8 @@ function InterfacePortal ({ apiPath = "" }) {
             writeFileSync(outputInterface, output);
           }
         }).catch((e) => {
-          console.error('interfac-portal: ', e)
+          writeFileSync(_logFile, `${e.toString()}\n`)
+          appendFileSync(_logFile, e.response['data'])
         })
       return null
     }
