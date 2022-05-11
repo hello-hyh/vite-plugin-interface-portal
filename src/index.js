@@ -7,7 +7,10 @@ const outputSwJson = path.resolve(`./swagger_interface/swagger.json`)
 const outputInterface = path.resolve(`./swagger_interface/interface.ts`)
 const cacheDir = path.resolve(`./node_modules/.InterfacePortal`)
 const md5 = require("md5");
-
+const https = require('https')
+const agent = new https.Agent({
+  rejectUnauthorized: false
+});
 function InterfacePortal ({ apiPath = "" }) {
   const _apiPath = apiPath
   const _catchFile = `${cacheDir}/${md5(_apiPath)}.txt`
@@ -29,7 +32,9 @@ function InterfacePortal ({ apiPath = "" }) {
       }
       const lastHash = readFileSync(_catchFile, 'utf-8')
       axios
-        .get(_apiPath)
+        .get(_apiPath, {
+          httpsAgent: agent
+        })
         .then(async ({ data: res }) => {
           const resStr = JSON.stringify(res['components'])
           const currentHash = resStr.length.toString()
@@ -45,9 +50,7 @@ function InterfacePortal ({ apiPath = "" }) {
           }
         }).catch((e) => {
           writeFileSync(_logFile, `${e.toString()}\n`)
-          appendFileSync(_logFile, e.response['data'])
         })
-      return null
     }
   }
 }
